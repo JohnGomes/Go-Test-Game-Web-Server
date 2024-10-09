@@ -9,8 +9,7 @@ import (
 )
 
 func main() {
-	// handler := http.HandlerFunc(PlayerServer)
-	server := &s.PlayerServer{d.NewInMemoryPlayerStore()}
-	// server.ServeHttp()
+	server := s.NewPlayerServer(d.NewInMemoryPlayerStore()) //&s.PlayerServer{Store: d.NewInMemoryPlayerStore(), Router: http.NewServeMux()}
+
 	log.Fatal(http.ListenAndServe(":5000", server))
 }

@@ -1,22 +1,40 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/JohnGomes/Go-Test-Game-Web-Server/pkg/server/models"
 )
 
+const JSONContentType = "application/json"
+
 type PlayerServer struct {
-	Store PlayerStore
+	Store models.PlayerStore
+	http.Handler
 }
 
-type PlayerStore interface {
-	GetPlayerScore(name string) int
-	RecordWin(name string)
+func NewPlayerServer(store models.PlayerStore) *PlayerServer {
+	p := new(PlayerServer)
+	p.Store = store
+	router := http.NewServeMux()
+
+	router.Handle("/league", http.HandlerFunc(p.leagueHandler))
+	router.Handle("/players/", http.HandlerFunc(p.playersHandler))
+
+	p.Handler = router
+	return p
 }
 
-func (p *PlayerServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("content-type", JSONContentType)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(p.Store.GetLeague())
+}
 
+func (p *PlayerServer) playersHandler(w http.ResponseWriter, r *http.Request) {
 	player := strings.TrimPrefix(r.URL.Path, "/players/")
 
 	switch r.Method {
