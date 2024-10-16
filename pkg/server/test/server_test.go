@@ -3,6 +3,7 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	helpers "github.com/JohnGomes/Go-Test-Game-Web-Server/pkg/testing"
 	"github.com/JohnGomes/Go-Test-Game-Web-Server/pkg/testing/stubs"
 	"net/http"
 	"net/http/httptest"
@@ -130,13 +131,7 @@ func TestStoreWins(t *testing.T) {
 
 		assertStatus(t, response.Code, http.StatusAccepted)
 
-		if len(_store.WinCalls) != 1 {
-			t.Errorf("got %d calls to RecordWin want %d", len(_store.WinCalls), 1)
-		}
-
-		if _store.WinCalls[0] != player {
-			t.Errorf("did not _store correct winner got %q want %q", _store.WinCalls[0], player)
-		}
+		helpers.AssertPlayerWin(t, &_store, "Chris")
 
 	})
 }
