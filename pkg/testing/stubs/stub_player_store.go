@@ -7,10 +7,10 @@ import (
 type StubPlayerStore struct {
 	Scores   map[string]int
 	WinCalls []string
-	League   []models.Player
+	League   models.League
 }
 
-func (s *StubPlayerStore) GetLeague() []models.Player {
+func (s *StubPlayerStore) GetLeague() models.League {
 	return s.League
 }
 

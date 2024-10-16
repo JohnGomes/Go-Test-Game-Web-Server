@@ -10,8 +10,8 @@ func NewInMemoryPlayerStore() *InMemoryPlayerStore {
 	return &InMemoryPlayerStore{map[string]int{}}
 }
 
-func (i *InMemoryPlayerStore) GetLeague() []models.Player {
-	var league []models.Player
+func (i *InMemoryPlayerStore) GetLeague() models.League {
+	var league models.League
 	for name, wins := range i.store {
 		league = append(league, models.Player{name, wins})
 	}

@@ -3,6 +3,7 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/JohnGomes/Go-Test-Game-Web-Server/pkg/testing/stubs"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -10,7 +11,6 @@ import (
 
 	"github.com/JohnGomes/Go-Test-Game-Web-Server/pkg/server"
 	"github.com/JohnGomes/Go-Test-Game-Web-Server/pkg/server/models"
-	"github.com/JohnGomes/Go-Test-Game-Web-Server/pkg/server/test/stubs"
 )
 
 func Test_GetLeagues(t *testing.T) {
